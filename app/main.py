@@ -14,8 +14,7 @@ app = FastAPI(
 )
 
 # Load the AI agent only once
-agent = SHLAgent()
-
+agent = None
 # --------------------------------------------------
 # Request Model
 # --------------------------------------------------
@@ -62,13 +61,6 @@ def health():
 
 @app.post("/chat")
 def chat(request: ChatRequest):
-
-    try:
-        response = agent.chat(request.messages)
-        return response
-
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=str(e)
-        )
+    return {
+        "message": "Chat endpoint reached successfully"
+    }
