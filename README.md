@@ -1,42 +1,15 @@
 # SHL Assessment Recommendation Agent
 
-An AI-powered SHL Assessment Recommendation Agent built using FastAPI, FAISS, and Google's Gemini API.
-
-The system helps recruiters identify the most suitable SHL assessments based on job requirements while supporting clarification, recommendation refinement, assessment comparison, and out-of-scope request handling.
-
----
+An AI-powered FastAPI application that recommends relevant SHL assessments based on a candidate's job description or role requirements.
 
 ## Features
 
-- SHL catalog retrieval using FAISS vector search
+- Recommend SHL assessments using AI
+- Semantic search using FAISS and Sentence Transformers
+- Supports natural language job descriptions
 - FastAPI REST API
-- Stateless conversation handling
-- Context extraction from conversation history
-- AI-powered assessment recommendations using Gemini
-- Assessment comparison using SHL catalog data
-- Clarification for incomplete user queries
-- Recommendation refinement when user changes requirements
-- Refusal of non-SHL related requests
-
----
-
-## Project Architecture
-
-User
-↓
-FastAPI (/chat)
-↓
-Context Builder
-↓
-Planner
-↓
-Retriever (FAISS)
-↓
-Gemini LLM
-↓
-SHL Assessment Recommendations
-
----
+- Interactive Swagger documentation
+- Deployed on Railway
 
 ## Tech Stack
 
@@ -45,114 +18,74 @@ SHL Assessment Recommendations
 - Google Gemini API
 - FAISS
 - Sentence Transformers
-- Pydantic
-- Uvicorn
+- BeautifulSoup
+- Railway
+- GitHub
 
----
+## Live Demo
 
-## Folder Structure
+API Base URL:
 
-```
-shl-assessment-agent/
-│
-├── app/
-│   ├── agent.py
-│   ├── planner.py
-│   ├── context_builder.py
-│   ├── retriever.py
-│   ├── catalog_service.py
-│   ├── llm.py
-│   ├── main.py
-│   └── conversation.py
-│
-├── scraper/
-│   └── fetch_catalog.py
-│
-├── data/
-│   └── catalog.json
-│
-├── vectorstore/
-│   ├── faiss.index
-│   └── metadata.pkl
-│
-├── requirements.txt
-├── .env.example
-└── README.md
-```
+https://shlassessmentagent-production.up.railway.app
 
----
+Swagger Documentation:
+
+https://shlassessmentagent-production.up.railway.app/docs
 
 ## Installation
 
-Clone the repository
+Clone the repository:
 
 ```bash
-[git clone https://github.com/rakeshricky442/shl_assessment_agent.git
-]
+git clone https://github.com/rakeshricky442/shl_assessment_agent.git
 cd shl_assessment_agent
 ```
 
-Create virtual environment
+Create a virtual environment:
 
 ```bash
 python -m venv .venv
 ```
 
-Activate
+Activate it:
 
-Mac/Linux
-
-```bash
-source .venv/bin/activate
-```
-
-Windows
+**Windows**
 
 ```bash
 .venv\Scripts\activate
 ```
 
-Install dependencies
+**macOS/Linux**
+
+```bash
+source .venv/bin/activate
+```
+
+Install dependencies:
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
-## Environment Variables
-
-Create a `.env` file.
-
-Example
+Create a `.env` file:
 
 ```env
-GEMINI_API_KEY=your_api_key_here
+GEMINI_API_KEY=YOUR_API_KEY
 ```
 
----
-
-## Run the Project
+Run the application:
 
 ```bash
-uvicorn app.main:app --reload
+python -m uvicorn app.main:app --reload
 ```
-
-API
-
-```
-http://127.0.0.1:8000
-```
-
-Swagger UI
-
-```
-http://127.0.0.1:8000/docs
-```
-
----
 
 ## API Endpoints
+
+### Home
+
+```
+GET /
+```
 
 ### Health Check
 
@@ -160,77 +93,48 @@ http://127.0.0.1:8000/docs
 GET /health
 ```
 
-Response
-
-```json
-{
-    "status":"ok"
-}
-```
-
----
-
 ### Chat
 
 ```
 POST /chat
 ```
 
-Example Request
+Example request:
 
 ```json
 {
-  "messages":[
+  "messages": [
     {
-      "role":"user",
-      "content":"Recommend assessments for graduate Java developers."
+      "role": "user",
+      "content": "Recommend SHL assessments for a Python Data Analyst."
     }
   ]
 }
 ```
 
-Example Response
+## Project Structure
 
-```json
-{
-  "reply":"Recommended assessments...",
-  "recommendations":[
-    {
-      "name":"Java 8 (New)",
-      "url":"https://www.shl.com/...",
-      "test_type":"K"
-    }
-  ],
-  "end_of_conversation":true
-}
+```
+app/
+├── agent.py
+├── planner.py
+├── retriever.py
+├── context_builder.py
+├── catalog_service.py
+├── llm.py
+├── main.py
+
+data/
+vectorstore/
+scraper/
+
+requirements.txt
+README.md
 ```
 
----
+## Deployment
 
-## Supported Behaviors
-
-- Clarify vague requests
-- Recommend SHL assessments
-- Refine previous recommendations
-- Compare SHL assessments
-- Refuse out-of-scope requests
-
----
-
-## Testing
-
-The project has been tested for:
-
-- Health endpoint
-- Clarification flow
-- Recommendation flow
-- Refinement flow
-- Assessment comparison
-- Stateless conversation handling
-- Long job description parsing
-- Out-of-scope request handling
-
----
+The application is deployed on Railway and is publicly accessible.
 
 ## Author
 
